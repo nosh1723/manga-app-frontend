@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { HashRouter as Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Homepage from "./pages/Homepage";
 import SignupSignIn from "./pages/SignupSignIn";
@@ -13,7 +13,6 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/manga-app-frontend" element={<Homepage />} />
         <Route path="/signin" element={<SignupSignIn />} />
         <Route path="/signup" element={<SignupSignIn />} />
         <Route path="/*" element={<Notfound />} />
