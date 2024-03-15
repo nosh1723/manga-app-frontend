@@ -13,6 +13,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/manga-app-frontend" element={<Homepage />} />
         <Route path="/signin" element={<SignupSignIn />} />
         <Route path="/signup" element={<SignupSignIn />} />
         <Route path="/*" element={<Notfound />} />
