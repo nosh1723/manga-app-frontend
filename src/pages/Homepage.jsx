@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Listmanga from '../components/Listmanga';
 
 const Homepage = () => {
@@ -15,7 +14,6 @@ const Homepage = () => {
                 }}
             ></div>
             <Listmanga />
-            <Footer />
         </div>
     );
 };
