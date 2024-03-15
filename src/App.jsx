@@ -1,4 +1,4 @@
-import { HashRouter as Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Homepage from "./pages/Homepage";
 import SignupSignIn from "./pages/SignupSignIn";
