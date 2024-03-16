@@ -1,14 +1,15 @@
 import { Routes, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
 import { ToastContainer } from "react-toastify";
 import Homepage from "./pages/Homepage";
 import SignupSignIn from "./pages/SignupSignIn";
-import Notfound from "./components/Notfound";
+import Notfound from "./pages/Notfound";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import MangaManagement from "./pages/MangaManagement";
 import FormHandleManga from "./pages/FormHandleManga";
 
 function App() {
-
   return <>
     <div className="App">
       <Routes>

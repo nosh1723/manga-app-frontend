@@ -1,8 +1,9 @@
 import Header from '../components/Header'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { createManga, getManga, updateManga } from '../services'
 import { Link, useLocation, useParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import LoadingBar from "react-top-loading-bar"
 
 export default function FormHandleManga() {
     const [data, setData] = useState({})
@@ -10,13 +11,16 @@ export default function FormHandleManga() {
     const navigate = useNavigate()
     const path = useLocation().pathname
     const { id } = useParams()
+    const ref = useRef(null)
 
     useEffect(() => {
+        ref.current.continuousStart()
         const fetchManga = async () => {
             const result = await getManga(id)
             setManga(result)
         }
         fetchManga()
+        ref.current.complete()
     }, [])
 
     const handleChange = (e) => {
@@ -34,6 +38,7 @@ export default function FormHandleManga() {
     const handleSubmitForm = async () => {
         try {
             if (validData) {
+                ref.current.continuousStart()
                 if (id) {
                     await updateManga(id, data)
                     navigate("/manga-management")
@@ -42,6 +47,7 @@ export default function FormHandleManga() {
                     const res = await createManga(data)
                     toast.success("Create manga successfully!!")
                 }
+                ref.current.complete()
             }
 
         } catch (error) {
@@ -50,75 +56,35 @@ export default function FormHandleManga() {
     }
     return (
         <form>
+            <LoadingBar color="#2998ff" ref={ref} shadow={true} />
             <Header />
-            <div className="space-y-12 container w-full px-8 m-auto my-10">
+            <div className="space-y-12 container w-full px-8 mx-auto my-10">
                 <div className="border-b border-gray-900/10 pb-12">
 
                     <div className=" border-gray-900/10 pb-12">
-                        <h2 className="text-base font-semibold leading-7 text-gray-900">Create Manga</h2>
+                        <h2 className="text-base font-semibold leading-7 text-gray-900">{path === `/update-manga/${id}` ? "Edit Manga" : "Create Manga"}</h2>
 
-                        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
-                            <div className="sm:col-span-4">
-                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Name
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        onChange={handleChange}
-                                        name="name"
-                                        type="text"
-                                        defaultValue={path === `/update-manga/${id}` ? manga.name : ""}
-                                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
-                                </div>
+                        <div className="mt-5 ">
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Name</label>
+                                <input onChange={handleChange} defaultValue={path === `/update-manga/${id}` ? manga.name : ""} name="name" type="text" class="form-control" id="exampleInputPassword1" />
                             </div>
-                            <div className="sm:col-span-4">
-                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Last chapter
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        onChange={handleChange}
-                                        name="lastChapter"
-                                        type="text"
-                                        defaultValue={path === `/update-manga/${id}` ? manga.lastChapter : ""}
-                                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
-                                </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Last chapter</label>
+                                <input onChange={handleChange} defaultValue={path === `/update-manga/${id}` ? manga.lastChapter : ""} name="lastChapter" type="text" class="form-control" id="exampleInputPassword1" />
                             </div>
-                            <div className="sm:col-span-4">
-                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                    UpdateAt
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        onChange={handleChange}
-                                        name="updatedAt"
-                                        type="text"
-                                        defaultValue={path === `/update-manga/${id}` ? manga.updatedAt : ""}
-                                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
-                                </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">UpdateAt</label>
+                                <input onChange={handleChange} defaultValue={path === `/update-manga/${id}` ? manga.updatedAt : ""} name="updatedAt" type="text" class="form-control" id="exampleInputPassword1" />
                             </div>
-                            <div className="sm:col-span-4">
-                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Image Url
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        onChange={handleChange}
-                                        name="imageUrl"
-                                        type="text"
-                                        defaultValue={path === `/update-manga/${id}` ? manga.imageUrl : ""}
-                                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
-                                </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Image Url</label>
+                                <input onChange={handleChange} defaultValue={path === `/update-manga/${id}` ? manga.imageUrl : ""} name="imageUrl" type="text" class="form-control" id="exampleInputPassword1" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="mt-6 flex items-center justify-end gap-x-4 mb-10 ">
+                <div className="my-6 flex items-center justify-end gap-x-4 ">
                     <Link to={"/manga-management"} className="text-sm font-semibold leading-6 text-gray-900">
                         Cancel
                     </Link>

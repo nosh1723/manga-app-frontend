@@ -3,14 +3,6 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom';
 
-const navigation = [
-    { name: 'Sign Up', href: `/signup`, current: false },
-    { name: 'Sign In', href: '/signin', current: false },
-]
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
 
 export default function Header() {
     const session = sessionStorage.getItem("account")
@@ -18,6 +10,12 @@ export default function Header() {
     const handleSignOut = () => {
         sessionStorage.clear()
     }
+    const navigation = [
+        { name: 'Sign Up', href: `/signup`, current: false, isMobile: false },
+        { name: 'Sign In', href: '/signin', current: false, isMobile: false },
+        { name: 'Manga Mangagement', href: '/manga-management', current: false, isMobile: true },
+        { name: 'Sign Out', href: '/signin', current: false, isMobile: true, onClick: handleSignOut },
+    ]
     return (
         <Disclosure as="nav" className="bg-gray-200">
             {({ open }) => (
@@ -26,7 +24,7 @@ export default function Header() {
                         <div className="relative flex h-16 items-center justify-between">
                             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                                 {/* Mobile menu button*/}
-                                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-800 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-800  focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                                     <span className="absolute -inset-0.5" />
                                     <span className="sr-only">Open main menu</span>
                                     {open ? (
@@ -45,10 +43,7 @@ export default function Header() {
                                         {session &&
                                             <Link
                                                 to={'/manga-management'}
-                                                className={classNames(
-                                                    'text-black hover:bg-gray-700 hover:text-white',
-                                                    'rounded-md px-3 py-2 text-sm font-medium'
-                                                )}
+                                                className='text-black  rounded-md px-3 py-2 text-sm font-medium'
                                             >
                                                 Manga Management
                                             </Link>
@@ -61,26 +56,21 @@ export default function Header() {
                                     <Link
                                         onClick={handleSignOut}
                                         to={'/signin'}
-                                        className={classNames(
-                                            'text-black hover:bg-gray-700 hover:text-white',
-                                            'rounded-md px-3 py-2 text-sm font-medium'
-                                        )}
+                                        className='text-black  rounded-md px-3 py-2 text-sm font-medium hidden sm:block'
                                     >
                                         Sign Out
                                     </Link>
-                                    : navigation.map((item) => (
-                                        <Link
-                                            to={item.href}
-                                            key={item.name}
-                                            className={classNames(
-                                                item.current ? 'bg-gray-900 text-white' : 'text-black hover:bg-gray-700 hover:text-white',
-                                                'rounded-md px-3 py-2 text-sm font-medium'
-                                            )}
-                                            aria-current={item.current ? 'page' : undefined}
-                                        >
-                                            {item.name}
-                                        </Link>
-                                    ))
+                                    : navigation.map((item) => {
+                                        if (!item.isMobile) {
+                                            return <Link
+                                                key={"aaa-" + item.name}
+                                                to={item.href}
+                                                className='text-black  block rounded-md px-3 py-2 text-base font-medium sm:block hidden'
+                                            >
+                                                {item.name}
+                                            </Link>
+                                        }
+                                    })
                                 }
                             </div>
                         </div>
@@ -88,20 +78,30 @@ export default function Header() {
 
                     <Disclosure.Panel className="sm:hidden">
                         <div className="space-y-1 px-2 pb-3 pt-2">
-                            {navigation.map((item) => (
-                                <Disclosure.Button
-                                    key={item.name}
-                                    as="a"
-                                    href={item.href}
-                                    className={classNames(
-                                        item.current ? 'bg-gray-900 text-white' : 'text-black hover:bg-gray-700 hover:text-white',
-                                        'block rounded-md px-3 py-2 text-base font-medium'
-                                    )}
-                                    aria-current={item.current ? 'page' : undefined}
-                                >
-                                    {item.name}
-                                </Disclosure.Button>
-                            ))}
+                            {!session ? navigation.map((item) => {
+                                if (!item.isMobile) {
+                                    return <Link
+                                        key={"aaa-" + item.name}
+                                        to={item.href}
+                                        className='text-black hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium'
+                                    >
+                                        {item.name}
+                                    </Link>
+                                }
+                            }) :
+                                navigation.map((item) => {
+                                    if (item.isMobile) {
+                                        return <Link
+                                            key={"aaa-" + item.name}
+                                            onClick={item.onClick}
+                                            to={item.href}
+                                            className='text-black  block rounded-md px-3 py-2 text-base font-medium'
+                                        >
+                                            {item.name}
+                                        </Link>
+                                    }
+                                })
+                            }
                         </div>
                     </Disclosure.Panel>
                 </>

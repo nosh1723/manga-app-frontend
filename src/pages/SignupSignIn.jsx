@@ -6,7 +6,6 @@ import { toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 const SignupSignIn = () => {
     const [dataUser, setDataUser] = useState({})
-    const [resSignUp, setResSignUp] = useState({})
     const path = useLocation().pathname
     const navigate = useNavigate()
 
@@ -78,76 +77,28 @@ const SignupSignIn = () => {
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <div className="space-y-6" >
                         {path === "/signin" ? "" :
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                    User Name
-                                </label>
-                                <div className="mt-2">
-                                    <input
-                                        onChange={handleChange}
-                                        id="name"
-                                        name="name"
-                                        type="text"
-                                        required
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
-                                </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">User Name</label>
+                                <input onChange={handleChange} name="name" type="text" class="form-control" id="exampleInputPassword1" />
                             </div>}
 
-                        <div>
-                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                Email address
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    onChange={handleChange}
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Email address</label>
+                            <input onChange={handleChange} name="email" type="email" class="form-control" id="exampleInputPassword1" />
                         </div>
 
-                        <div>
-                            <div className="flex items-center justify-between">
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Password
-                                </label>
-                            </div>
-                            <div className="mt-2">
-                                <input
-                                    onChange={handleChange}
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    autoComplete="current-password"
-                                    required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input onChange={handleChange} name="password" type="password" class="form-control" id="exampleInputPassword1" />
                         </div>
+
 
                         {path === "/signin" ? "" :
-                            <div>
-                                <div className="flex items-center justify-between">
-                                    <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                                        Re-enter password
-                                    </label>
-                                </div>
-                                <div className="mt-2">
-                                    <input
-                                        onChange={handleChange}
-                                        name="repassword"
-                                        type="password"
-                                        autoComplete="current-password"
-                                        required
-                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    />
-                                </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Re-enter password</label>
+                                <input onChange={handleChange} name="repassword" type="password" class="form-control" id="exampleInputPassword1" />
                             </div>
+
                         }
 
                         <div>

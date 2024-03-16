@@ -4,13 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { HashRouter } from "react-router-dom";
+import { ContextWrap } from "./contexts";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <HashRouter>
-      <App />
-    </HashRouter>
+    <ContextWrap>
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </ContextWrap>
   </React.StrictMode>
 );
 
