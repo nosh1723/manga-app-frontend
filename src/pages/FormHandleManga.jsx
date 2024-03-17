@@ -1,9 +1,10 @@
 import Header from '../components/Header'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useContext } from 'react'
 import { createManga, getManga, updateManga } from '../services'
 import { Link, useLocation, useParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import LoadingBar from "react-top-loading-bar"
+import { AppContext } from '../contexts'
 
 export default function FormHandleManga() {
     const [data, setData] = useState({})
@@ -12,6 +13,7 @@ export default function FormHandleManga() {
     const path = useLocation().pathname
     const { id } = useParams()
     const ref = useRef(null)
+    const context = useContext(AppContext)
 
     useEffect(() => {
         ref.current.continuousStart()
@@ -28,19 +30,19 @@ export default function FormHandleManga() {
     }
 
     const validData = () => {
-        if (!data.name || !data.updatedAt || !data.lastChapter || !data.imageUrl) {
+        if (!data.name && !(path === `/update-manga/${id}`)) {
             toast.error("Input is required!!!")
             return false
         }
         return true
     }
-
     const handleSubmitForm = async () => {
         try {
-            if (validData) {
+            if (validData()) {
                 ref.current.continuousStart()
                 if (id) {
                     await updateManga(id, data)
+                    context.isReRender ? context.setIsReRender(false) : context.setIsReRender(true)
                     navigate("/manga-management")
                     toast.success("Update manga successfully!!")
                 } else {

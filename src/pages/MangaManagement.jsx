@@ -21,8 +21,6 @@ export default function MangaManagement() {
     const handleSearch = _.debounce(e => {
         context.setSearchValue(e.target.value)
     }, 600)
-    console.log(context.searchValue);
-    console.log(context.manga);
     return (<>
         <LoadingBar color="#2998ff" ref={context.ref} shadow={true} />
         <Header />
