@@ -41,10 +41,10 @@ const createManga = async (data) => {
     console.log(error);
   }
 };
-const getAllManga = async (page) => {
+const getAllManga = async (query) => {
   try {
     const data = await axios.get(
-      `https://dark-gray-fly-tam.cyclic.app/api/all-manga?page=${page}`
+      `https://dark-gray-fly-tam.cyclic.app/api/all-manga?page=${query.page}&search=${query.searchValue}`
     );
     return data.data;
   } catch (error) {
